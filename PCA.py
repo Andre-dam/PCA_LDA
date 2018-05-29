@@ -2,7 +2,7 @@ from sklearn import preprocessing
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
+
 def pca(X,K):
     X=X.astype('float64')
     #------------------mean removal of each feature-----------------------
@@ -23,3 +23,20 @@ def pca(X,K):
     Z = np.matmul(X_norm,eigenVectors[:,range(K)])
 
     return Z
+
+def pca_eigen(X):
+    X=X.astype('float64')
+    #------------------mean removal of each feature-----------------------
+    X_norm = preprocessing.scale(X, with_std = False)
+
+    #----------------------covariance matrix------------------------------    
+    X_cov = np.cov(X_norm.T)
+    #------------eigenvalues and eigenvectors computation-----------------
+    eigenValues, eigenVectors = np.linalg.eig(X_cov)
+
+    #-----------sort eigenvalues and eigenvectors descending--------------
+    idx = eigenValues.argsort()[::-1]   
+    eigenValues = eigenValues[idx]
+    eigenVectors = eigenVectors[:,idx]
+
+    return eigenValues, eigenVectors

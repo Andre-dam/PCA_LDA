@@ -9,7 +9,6 @@ def loadData(filename):
     if '.arff' in filename:
         data = arff.loadarff(filename)
         dataset = pd.DataFrame(data[0]).values
-        print dataset[2]
         #dataset[:,range(len(dataset[0])-1)] = preprocessing.normalize(dataset[:,range(len(dataset[0])-1)])               
     elif '.csv' in filename or '.data' in filename:
         df=pd.read_csv(filename, sep=',',header=None)
